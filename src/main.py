@@ -1,26 +1,27 @@
 """
 Main FastAPI Application Entry Point for Returns Manager.
-Includes health check, tenant API routers, CORS, and static demo UI serving.
+Includes health check, tenant API routers, CORS, and full demo UI dashboard.
 """
 from __future__ import annotations
 
-import os
-from pathlib import Path
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
 from src.config import get_settings
 from src.database.connection import init_db
 from src.ingestion.router import router as returns_router
+from src.ui_template import DASHBOARD_HTML
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Initialize SQLite database schema
-    init_db()
+    try:
+        init_db()
+    except Exception as e:
+        print(f"Lifespan DB initialization notice: {e}")
     yield
 
 
@@ -55,23 +56,7 @@ def health_check():
     }
 
 
-# Resolve UI index.html path reliably in local and serverless environments
-BASE_DIR = Path(__file__).resolve().parent.parent
-UI_INDEX_PATH = BASE_DIR / "ui" / "public" / "index.html"
-
-
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
 def serve_ui():
-    if UI_INDEX_PATH.exists():
-        with open(UI_INDEX_PATH, "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
-    return HTMLResponse(
-        content="""
-        <html>
-            <body style="font-family:sans-serif; padding:2rem; text-align:center;">
-                <h2>Cube 04 — Returns Manager API Active</h2>
-                <p>Visit <a href="/docs">/docs</a> for interactive OpenAPI Swagger documentation.</p>
-            </body>
-        </html>
-        """
-    )
+    """Serves the complete interactive Returns Manager Operator Dashboard directly."""
+    return HTMLResponse(content=DASHBOARD_HTML)
