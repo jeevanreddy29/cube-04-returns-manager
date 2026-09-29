@@ -1,0 +1,34 @@
+{
+  "version": "2024-amazon-used-condition-guidelines",
+  "source": "https://www.amazon.com/gp/help/customer/display.html?nodeId=201889220",
+  "note": "Authoritative Amazon condition scale definitions loaded dynamically at runtime. Observed state from operators is strictly decoupled from these grades.",
+  "grades": [
+    {
+      "grade": "New",
+      "description": "Brand-new, unused, unopened, undamaged item in its original packaging with all original packaging materials included."
+    },
+    {
+      "grade": "Like New",
+      "description": "An apparently untouched item in perfect condition. Original protective wrapping may be missing, but the original packaging is intact and pristine. Absolutely no signs of wear on the item or packaging. Instructions included."
+    },
+    {
+      "grade": "Very Good",
+      "description": "Well cared for item that has seen limited use but remains in great condition. Complete, fully operational, and functions as intended. Some signs of cosmetic wear may be present."
+    },
+    {
+      "grade": "Good",
+      "description": "Item shows wear from consistent use, but remains in good condition and functions properly. May arrive with damaged packaging or be repackaged. May have minor cosmetic blemishes."
+    },
+    {
+      "grade": "Acceptable",
+      "description": "Fairly worn through previous use, but continues to function properly. Signs of wear can include scratches, dents, and other aesthetic issues. May arrive with damaged packaging or missing accessories."
+    }
+  ],
+  "valid_grades": [
+    "New",
+    "Like New",
+    "Very Good",
+    "Good",
+    "Acceptable"
+  ]
+}

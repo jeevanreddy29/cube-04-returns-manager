@@ -1,0 +1,51 @@
+unit_id,org_id,order_id,ordered_sku,ordered_asin,parts_list,observed_state,human_1_condition,human_2_condition,human_1_disposition,human_2_disposition
+UNIT-EVAL-1001,org_demo_alpha,ORD-EVAL-50000,SKU-PUZZLE-500,B0DUMMY729,puzzle pieces;poster,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1002,org_demo_bravo,ORD-EVAL-50001,SKU-LAMP-LED,B0DUMMY357,lamp;usb cable;manual,opened_unused,Like New,Like New,restock,restock
+UNIT-EVAL-1003,org_demo_alpha,ORD-EVAL-50002,SKU-TOWEL-BLU,B0DUMMY600,towel,signs_of_use,Very Good,Very Good,restock,refurbish
+UNIT-EVAL-1004,org_demo_bravo,ORD-EVAL-50003,SKU-BOTTLE-750,B0DUMMY622,bottle;lid,signs_of_use,Good,Good,refurbish,refurbish
+UNIT-EVAL-1005,org_demo_alpha,ORD-EVAL-50004,SKU-SERUM-30,B0DUMMY031,bottle;dropper;leaflet,damaged,Acceptable,Acceptable,liquidate,dispose
+UNIT-EVAL-1006,org_demo_bravo,ORD-EVAL-50005,SKU-PROT-1KG,B0DUMMY357,tub;scoop,uncertain,UNCERTAIN,UNCERTAIN,pending_review,pending_review
+UNIT-EVAL-1007,org_demo_alpha,ORD-EVAL-50006,SKU-LEASH-6FT,B0DUMMY205,leash,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1008,org_demo_bravo,ORD-EVAL-50007,SKU-CABLE-USBC,B0DUMMY261,cable,opened_unused,Like New,Like New,restock,restock
+UNIT-EVAL-1009,org_demo_alpha,ORD-EVAL-50008,SKU-MUG-11,B0DUMMY351,mug x2,signs_of_use,Very Good,Very Good,restock,refurbish
+UNIT-EVAL-1010,org_demo_bravo,ORD-EVAL-50009,SKU-CANDLE-3,B0DUMMY964,candle x3;gift box,signs_of_use,Good,Good,refurbish,refurbish
+UNIT-EVAL-1011,org_demo_alpha,ORD-EVAL-50010,SKU-PUZZLE-500,B0DUMMY729,puzzle pieces;poster,damaged,Acceptable,Acceptable,liquidate,dispose
+UNIT-EVAL-1012,org_demo_bravo,ORD-EVAL-50011,SKU-LAMP-LED,B0DUMMY357,lamp;usb cable;manual,uncertain,UNCERTAIN,UNCERTAIN,pending_review,pending_review
+UNIT-EVAL-1013,org_demo_alpha,ORD-EVAL-50012,SKU-TOWEL-BLU,B0DUMMY600,towel,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1014,org_demo_bravo,ORD-EVAL-50013,SKU-BOTTLE-750,B0DUMMY622,bottle;lid,opened_unused,Like New,Like New,restock,restock
+UNIT-EVAL-1015,org_demo_alpha,ORD-EVAL-50014,SKU-SERUM-30,B0DUMMY031,bottle;dropper;leaflet,signs_of_use,Very Good,Very Good,restock,refurbish
+UNIT-EVAL-1016,org_demo_bravo,ORD-EVAL-50015,SKU-PROT-1KG,B0DUMMY357,tub;scoop,signs_of_use,Good,Good,refurbish,refurbish
+UNIT-EVAL-1017,org_demo_alpha,ORD-EVAL-50016,SKU-LEASH-6FT,B0DUMMY205,leash,damaged,Acceptable,Acceptable,liquidate,dispose
+UNIT-EVAL-1018,org_demo_bravo,ORD-EVAL-50017,SKU-CABLE-USBC,B0DUMMY261,cable,uncertain,UNCERTAIN,UNCERTAIN,pending_review,pending_review
+UNIT-EVAL-1019,org_demo_alpha,ORD-EVAL-50018,SKU-MUG-11,B0DUMMY351,mug x2,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1020,org_demo_bravo,ORD-EVAL-50019,SKU-CANDLE-3,B0DUMMY964,candle x3;gift box,opened_unused,Like New,Like New,restock,restock
+UNIT-EVAL-1021,org_demo_alpha,ORD-EVAL-50020,SKU-PUZZLE-500,B0DUMMY729,puzzle pieces;poster,signs_of_use,Very Good,Very Good,restock,refurbish
+UNIT-EVAL-1022,org_demo_bravo,ORD-EVAL-50021,SKU-LAMP-LED,B0DUMMY357,lamp;usb cable;manual,signs_of_use,Good,Good,refurbish,refurbish
+UNIT-EVAL-1023,org_demo_alpha,ORD-EVAL-50022,SKU-TOWEL-BLU,B0DUMMY600,towel,damaged,Acceptable,Acceptable,liquidate,dispose
+UNIT-EVAL-1024,org_demo_bravo,ORD-EVAL-50023,SKU-BOTTLE-750,B0DUMMY622,bottle;lid,uncertain,UNCERTAIN,UNCERTAIN,pending_review,pending_review
+UNIT-EVAL-1025,org_demo_alpha,ORD-EVAL-50024,SKU-SERUM-30,B0DUMMY031,bottle;dropper;leaflet,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1026,org_demo_bravo,ORD-EVAL-50025,SKU-PROT-1KG,B0DUMMY357,tub;scoop,opened_unused,Like New,Like New,restock,restock
+UNIT-EVAL-1027,org_demo_alpha,ORD-EVAL-50026,SKU-LEASH-6FT,B0DUMMY205,leash,signs_of_use,Very Good,Very Good,restock,refurbish
+UNIT-EVAL-1028,org_demo_bravo,ORD-EVAL-50027,SKU-CABLE-USBC,B0DUMMY261,cable,signs_of_use,Good,Good,refurbish,refurbish
+UNIT-EVAL-1029,org_demo_alpha,ORD-EVAL-50028,SKU-MUG-11,B0DUMMY351,mug x2,damaged,Acceptable,Acceptable,liquidate,dispose
+UNIT-EVAL-1030,org_demo_bravo,ORD-EVAL-50029,SKU-CANDLE-3,B0DUMMY964,candle x3;gift box,uncertain,UNCERTAIN,UNCERTAIN,pending_review,pending_review
+UNIT-EVAL-1031,org_demo_alpha,ORD-EVAL-50030,SKU-PUZZLE-500,B0DUMMY729,puzzle pieces;poster,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1032,org_demo_bravo,ORD-EVAL-50031,SKU-LAMP-LED,B0DUMMY357,lamp;usb cable;manual,opened_unused,Like New,Like New,restock,restock
+UNIT-EVAL-1033,org_demo_alpha,ORD-EVAL-50032,SKU-TOWEL-BLU,B0DUMMY600,towel,signs_of_use,Very Good,Very Good,restock,refurbish
+UNIT-EVAL-1034,org_demo_bravo,ORD-EVAL-50033,SKU-BOTTLE-750,B0DUMMY622,bottle;lid,signs_of_use,Good,Good,refurbish,refurbish
+UNIT-EVAL-1035,org_demo_alpha,ORD-EVAL-50034,SKU-SERUM-30,B0DUMMY031,bottle;dropper;leaflet,damaged,Acceptable,Acceptable,liquidate,dispose
+UNIT-EVAL-1036,org_demo_bravo,ORD-EVAL-50035,SKU-PROT-1KG,B0DUMMY357,tub;scoop,uncertain,UNCERTAIN,UNCERTAIN,pending_review,pending_review
+UNIT-EVAL-1037,org_demo_alpha,ORD-EVAL-50036,SKU-LEASH-6FT,B0DUMMY205,leash,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1038,org_demo_bravo,ORD-EVAL-50037,SKU-CABLE-USBC,B0DUMMY261,cable,opened_unused,Like New,Like New,restock,restock
+UNIT-EVAL-1039,org_demo_alpha,ORD-EVAL-50038,SKU-MUG-11,B0DUMMY351,mug x2,signs_of_use,Very Good,Very Good,restock,refurbish
+UNIT-EVAL-1040,org_demo_bravo,ORD-EVAL-50039,SKU-CANDLE-3,B0DUMMY964,candle x3;gift box,signs_of_use,Good,Good,refurbish,refurbish
+UNIT-EVAL-1041,org_demo_alpha,ORD-EVAL-50040,SKU-PUZZLE-500,B0DUMMY729,puzzle pieces;poster,damaged,Acceptable,Acceptable,liquidate,dispose
+UNIT-EVAL-1042,org_demo_bravo,ORD-EVAL-50041,SKU-LAMP-LED,B0DUMMY357,lamp;usb cable;manual,uncertain,UNCERTAIN,UNCERTAIN,pending_review,pending_review
+UNIT-EVAL-1043,org_demo_alpha,ORD-EVAL-50042,SKU-TOWEL-BLU,B0DUMMY600,towel,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1044,org_demo_bravo,ORD-EVAL-50043,SKU-BOTTLE-750,B0DUMMY622,bottle;lid,opened_unused,Like New,Like New,restock,restock
+UNIT-EVAL-1045,org_demo_alpha,ORD-EVAL-50044,SKU-SERUM-30,B0DUMMY031,bottle;dropper;leaflet,signs_of_use,Very Good,Very Good,restock,refurbish
+UNIT-EVAL-1046,org_demo_bravo,ORD-EVAL-50045,SKU-PROT-1KG,B0DUMMY357,tub;scoop,signs_of_use,Good,Good,refurbish,refurbish
+UNIT-EVAL-1047,org_demo_alpha,ORD-EVAL-50046,SKU-LEASH-6FT,B0DUMMY205,leash,damaged,Acceptable,Acceptable,liquidate,dispose
+UNIT-EVAL-1048,org_demo_bravo,ORD-EVAL-50047,SKU-CABLE-USBC,B0DUMMY261,cable,uncertain,UNCERTAIN,UNCERTAIN,pending_review,pending_review
+UNIT-EVAL-1049,org_demo_alpha,ORD-EVAL-50048,SKU-MUG-11,B0DUMMY351,mug x2,factory_sealed,New,New,restock,restock
+UNIT-EVAL-1050,org_demo_bravo,ORD-EVAL-50049,SKU-CANDLE-3,B0DUMMY964,candle x3;gift box,opened_unused,Like New,Like New,restock,restock
