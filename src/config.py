@@ -1,12 +1,28 @@
 """
 Application configuration using Pydantic Settings.
 Reads environment variables with support for dynamic GEMINI_MODEL selection.
+Supports serverless environments (Vercel / AWS Lambda) via /tmp directory.
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def _default_db_url() -> str:
+    # If running on Vercel or AWS Lambda, the root filesystem is read-only.
+    # We must store SQLite in /tmp.
+    if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+        return "sqlite:////tmp/returns_manager.db"
+    return "sqlite:///./returns_manager.db"
+
+
+def _default_storage_dir() -> Path:
+    if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+        return Path("/tmp/storage/images")
+    return Path("./storage/images")
 
 
 class Settings(BaseSettings):
@@ -31,7 +47,7 @@ class Settings(BaseSettings):
 
     # Database
     database_url: str = Field(
-        default="sqlite:///./returns_manager.db",
+        default_factory=_default_db_url,
         description="SQLAlchemy database connection string",
     )
 
@@ -42,7 +58,7 @@ class Settings(BaseSettings):
     app_host: str = Field(default="0.0.0.0")
 
     # Image Storage
-    image_storage_dir: Path = Field(default=Path("./storage/images"))
+    image_storage_dir: Path = Field(default_factory=_default_storage_dir)
     max_image_size_bytes: int = Field(default=10 * 1024 * 1024)
 
     @field_validator("gemini_model", mode="before")

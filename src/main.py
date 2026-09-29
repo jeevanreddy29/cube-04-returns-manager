@@ -5,11 +5,12 @@ Includes health check, tenant API routers, CORS, and static demo UI serving.
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse
 
 from src.config import get_settings
 from src.database.connection import init_db
@@ -54,14 +55,23 @@ def health_check():
     }
 
 
-# Static UI mount for lightweight standalone operation
-ui_dir = os.path.join(os.path.dirname(__file__), "..", "ui", "public")
-if os.path.exists(ui_dir):
-    app.mount("/static", StaticFiles(directory=ui_dir), name="static")
+# Resolve UI index.html path reliably in local and serverless environments
+BASE_DIR = Path(__file__).resolve().parent.parent
+UI_INDEX_PATH = BASE_DIR / "ui" / "public" / "index.html"
 
-    @app.get("/", include_in_schema=False)
-    def serve_ui():
-        index_file = os.path.join(ui_dir, "index.html")
-        if os.path.exists(index_file):
-            return FileResponse(index_file)
-        return {"message": "Returns Manager API Active. Visit /docs for Swagger."}
+
+@app.get("/", include_in_schema=False, response_class=HTMLResponse)
+def serve_ui():
+    if UI_INDEX_PATH.exists():
+        with open(UI_INDEX_PATH, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    return HTMLResponse(
+        content="""
+        <html>
+            <body style="font-family:sans-serif; padding:2rem; text-align:center;">
+                <h2>Cube 04 — Returns Manager API Active</h2>
+                <p>Visit <a href="/docs">/docs</a> for interactive OpenAPI Swagger documentation.</p>
+            </body>
+        </html>
+        """
+    )
