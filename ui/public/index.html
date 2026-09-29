@@ -22,14 +22,23 @@
       </div>
     </div>
     <div class="flex items-center space-x-4">
-      <label class="text-sm font-medium text-gray-600">Active Tenant:</label>
-      <select id="tenantSelect" class="border border-gray-300 rounded px-3 py-1 bg-white text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        <option value="org_demo_alpha">org_demo_alpha</option>
-        <option value="org_demo_bravo">org_demo_bravo</option>
-      </select>
-      <a href="/docs" target="_blank" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">API Docs (Swagger) &rarr;</a>
+      <div class="flex items-center space-x-2 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-1.5">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+        <label class="text-xs font-bold text-indigo-900 uppercase tracking-wider">Active Tenant:</label>
+        <select id="tenantSelect" class="border border-indigo-300 rounded px-2 py-0.5 bg-white text-xs font-bold text-indigo-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <option value="org_demo_alpha">org_demo_alpha</option>
+          <option value="org_demo_bravo">org_demo_bravo</option>
+        </select>
+      </div>
+      <a href="/docs" target="_blank" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold">Swagger API &rarr;</a>
     </div>
   </header>
+
+  <!-- Live Tenant Isolation Banner -->
+  <div class="bg-indigo-900 text-indigo-100 px-6 py-2 text-xs flex justify-between items-center">
+    <span>🔒 <strong>Tenant Isolation Mode Active:</strong> You are currently viewing isolated records for <code id="activeTenantLabel" class="bg-indigo-800 px-2 py-0.5 rounded text-white font-mono font-bold">org_demo_alpha</code>. Other tenants cannot access these rows.</span>
+    <span class="text-indigo-300">RULES.md §2.1 Compliance</span>
+  </div>
 
   <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
     <!-- Left: Intake Form -->
@@ -39,33 +48,33 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Unit ID</label>
-            <input type="text" id="unit_id" value="UNIT-0016" class="w-full border rounded px-3 py-1.5 text-sm" required>
+            <input type="text" id="unit_id" value="UNIT-0016" class="w-full border rounded px-3 py-1.5 text-sm font-mono" required>
           </div>
           <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Order ID</label>
-            <input type="text" id="order_id" value="ORD-DUMMY-50016" class="w-full border rounded px-3 py-1.5 text-sm" required>
+            <input type="text" id="order_id" value="ORD-DUMMY-50016" class="w-full border rounded px-3 py-1.5 text-sm font-mono" required>
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Ordered SKU</label>
-            <input type="text" id="ordered_sku" value="SKU-TOWEL-BLU" class="w-full border rounded px-3 py-1.5 text-sm" required>
+            <input type="text" id="ordered_sku" value="SKU-TOWEL-BLU" class="w-full border rounded px-3 py-1.5 text-sm font-mono" required>
           </div>
           <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Ordered ASIN</label>
-            <input type="text" id="ordered_asin" value="B0DUMMY600" class="w-full border rounded px-3 py-1.5 text-sm" required>
+            <input type="text" id="ordered_asin" value="B0DUMMY600" class="w-full border rounded px-3 py-1.5 text-sm font-mono" required>
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-gray-600 mb-1">Expected Parts List (comma separated)</label>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Expected Parts List</label>
           <input type="text" id="parts_list" value="towel" class="w-full border rounded px-3 py-1.5 text-sm">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-gray-600 mb-1">Observed State (Intake Observation)</label>
-          <select id="observed_state" class="w-full border rounded px-3 py-1.5 text-sm bg-white">
+          <select id="observed_state" class="w-full border rounded px-3 py-1.5 text-sm bg-white font-medium">
             <option value="factory_sealed">factory_sealed (Tape intact, unopened)</option>
             <option value="opened_unused" selected>opened_unused (Opened, pristine)</option>
             <option value="signs_of_use">signs_of_use (Wear/handling signs)</option>
@@ -87,8 +96,9 @@
       </form>
     </section>
 
-    <!-- Right: Evidence Record Viewer & Override Panel -->
+    <!-- Right: Evidence Record Viewer & History -->
     <section class="lg:col-span-7 space-y-6">
+      <!-- Active Inspection Result Card -->
       <div id="resultCard" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
         <div class="flex justify-between items-center mb-4 pb-2 border-b">
           <h2 class="text-lg font-bold text-gray-800">Operational Evidence Record</h2>
@@ -99,14 +109,14 @@
           <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          Submit a parcel on the left to view the traceable structured evidence contract.
+          Submit a parcel or select a tenant record below.
         </div>
 
         <div id="evidenceDisplay" class="hidden space-y-5">
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 p-4 rounded-lg border text-sm">
             <div>
               <span class="block text-xs text-gray-500 font-medium">Record ID</span>
-              <span id="dispRecordId" class="font-bold text-gray-800">-</span>
+              <span id="dispRecordId" class="font-bold text-gray-800 font-mono">-</span>
             </div>
             <div>
               <span class="block text-xs text-gray-500 font-medium">Amazon Condition</span>
@@ -128,7 +138,7 @@
           </div>
 
           <div class="border-t pt-4">
-            <h3 class="text-sm font-bold text-gray-700 mb-2">Operator Override</h3>
+            <h3 class="text-sm font-bold text-gray-700 mb-2">Operator Override (Append-Only)</h3>
             <div class="flex gap-2">
               <select id="overrideCheckKey" class="border rounded px-2 py-1 text-xs">
                 <option value="condition">Condition</option>
@@ -145,9 +155,43 @@
           <div class="border-t pt-3">
             <details class="text-xs">
               <summary class="font-semibold text-gray-600 cursor-pointer">Raw Evidence Contract JSON (SHA-256 Verified)</summary>
-              <pre id="rawJson" class="bg-gray-900 text-green-400 p-3 rounded mt-2 overflow-x-auto text-xs"></pre>
+              <pre id="rawJson" class="bg-gray-900 text-green-400 p-3 rounded mt-2 overflow-x-auto text-xs font-mono"></pre>
             </details>
           </div>
+        </div>
+      </div>
+
+      <!-- Tenant Isolation Data Explorer -->
+      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div class="flex justify-between items-center mb-3">
+          <div>
+            <h3 class="text-sm font-bold text-gray-800">Database Records for Active Tenant</h3>
+            <p class="text-xs text-gray-500">Notice: Only rows belonging to the active tenant appear here.</p>
+          </div>
+          <button id="btnRefreshList" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold border border-indigo-200 px-2.5 py-1 rounded">
+            ↻ Refresh List
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-xs text-left border">
+            <thead class="bg-gray-50 text-gray-600 border-b">
+              <tr>
+                <th class="py-2 px-3">Record ID</th>
+                <th class="py-2 px-3">Unit ID</th>
+                <th class="py-2 px-3">SKU</th>
+                <th class="py-2 px-3">Condition</th>
+                <th class="py-2 px-3">Disposition</th>
+                <th class="py-2 px-3">Status</th>
+                <th class="py-2 px-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="tenantRecordsTable" class="divide-y divide-gray-100">
+              <tr>
+                <td colspan="7" class="py-4 text-center text-gray-400">No records found for this tenant yet.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -156,6 +200,19 @@
   <script>
     let activeRecord = null;
 
+    // Synchronize tenant selection
+    document.getElementById('tenantSelect').addEventListener('change', (e) => {
+      const orgId = e.target.value;
+      document.getElementById('activeTenantLabel').innerText = orgId;
+      fetchTenantRecords(orgId);
+    });
+
+    document.getElementById('btnRefreshList').addEventListener('click', () => {
+      const orgId = document.getElementById('tenantSelect').value;
+      fetchTenantRecords(orgId);
+    });
+
+    // Intake Form Submission
     document.getElementById('intakeForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const orgId = document.getElementById('tenantSelect').value;
@@ -184,6 +241,7 @@
         const data = await res.json();
         activeRecord = data;
         renderEvidence(data);
+        fetchTenantRecords(orgId); // Refresh table
       } catch (err) {
         alert("Assessment error: " + err.message);
       } finally {
@@ -192,6 +250,7 @@
       }
     });
 
+    // Operator Override
     document.getElementById('btnOverride').addEventListener('click', async () => {
       if (!activeRecord) return;
       const orgId = document.getElementById('tenantSelect').value;
@@ -215,8 +274,51 @@
       const updated = await res.json();
       activeRecord = updated;
       renderEvidence(updated);
+      fetchTenantRecords(orgId);
       alert("Override appended. Original decision preserved in audit history.");
     });
+
+    // Fetch and display records strictly filtered for the current active tenant
+    async function fetchTenantRecords(orgId) {
+      try {
+        const res = await fetch(`/api/v1/returns/?limit=50`, {
+          headers: { 'X-Org-Id': orgId }
+        });
+        const data = await res.json();
+        const tbody = document.getElementById('tenantRecordsTable');
+        tbody.innerHTML = '';
+
+        if (!data.records || data.records.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-gray-400">Zero records for <strong>${orgId}</strong>. Perfect isolation!</td></tr>`;
+          return;
+        }
+
+        data.records.forEach(r => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-gray-50";
+          tr.innerHTML = `
+            <td class="py-2 px-3 font-mono font-bold text-gray-800">${r.record_id}</td>
+            <td class="py-2 px-3 font-mono">${r.subject?.unit_id || '-'}</td>
+            <td class="py-2 px-3">${r.subject?.ordered_sku || '-'}</td>
+            <td class="py-2 px-3 font-semibold text-indigo-700">${r.outcome?.condition || 'UNCERTAIN'}</td>
+            <td class="py-2 px-3 font-semibold text-green-700 uppercase">${r.outcome?.disposition || '-'}</td>
+            <td class="py-2 px-3"><span class="px-1.5 py-0.5 rounded text-xxs font-bold ${getVerdictClass(r.outcome?.overall_verdict)}">${r.status.toUpperCase()}</span></td>
+            <td class="py-2 px-3 text-right">
+              <button onclick='viewSpecificRecord(${JSON.stringify(r)})' class="text-indigo-600 hover:text-indigo-900 font-semibold underline">View</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error("Failed to fetch tenant records", err);
+      }
+    }
+
+    window.viewSpecificRecord = function(record) {
+      activeRecord = record;
+      renderEvidence(record);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     function renderEvidence(record) {
       document.getElementById('welcomePlaceholder').classList.add('hidden');
@@ -258,6 +360,9 @@
       if (v === 'FAIL') return 'badge-fail';
       return 'badge-uncertain';
     }
+
+    // Initial load
+    fetchTenantRecords('org_demo_alpha');
   </script>
 </body>
 </html>
