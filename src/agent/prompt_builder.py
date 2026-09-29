@@ -41,6 +41,9 @@ Note: observed_state is NOT an official condition grade. You must independently 
 MANDATORY RULES:
 1. Conduct all 3 checks based on the provided images:
    a. IDENTITY: Does the item in the images match the ordered SKU/ASIN ({ordered_sku})?
+      - Look for verifiable identifiers: barcode, UPC, EAN, ASIN label, model number, or serial tag.
+      - RULE ON VISUAL LIKENESS: If the item visually looks like the expected product but NO strong identifier (barcode/ASIN/serial/model stamp) is readable in the photos, do NOT blindly return PASS. You MUST return UNCERTAIN (e.g. "Visual match but barcode/serial unreadable") to route to operator review and protect against switch fraud.
+      - Return FAIL only if the item is clearly a different product, wrong model/color, or an empty box.
    b. COMPLETENESS: Are all expected parts present? Detail any missing components.
    c. CONDITION: Grade using ONLY the Amazon condition scale: New, Like New, Very Good, Good, Acceptable.
 2. Use PASS, FAIL, or UNCERTAIN.
