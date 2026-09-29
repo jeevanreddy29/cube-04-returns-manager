@@ -1,17 +1,21 @@
 """
 Returns Ingestion and Assessment API router.
 Enforces tenant isolation, initiates single batched AI analysis, and returns evidence record.
+Includes tenant-gated image retrieval endpoint (RULES.md §2.1).
 """
 from __future__ import annotations
 
 import json
+import os
 import uuid
 from datetime import datetime, timezone
+from pathlib import Path
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, status
+from fastapi.responses import FileResponse, Response
 from sqlalchemy.orm import Session
 
 from src.database.connection import get_db
-from src.database.models import ReturnRecord
+from src.database.models import ReturnRecord, ImageRecord
 from src.database.repository import ReturnRepository
 from src.ingestion.schemas import (
     AssessRequest,
@@ -57,11 +61,21 @@ async def assess_return(
     request.org_id = effective_org
     record_id = f"RTN-{uuid.uuid4().hex[:6].upper()}"
 
+    repo = ReturnRepository(db)
+
     # Storing incoming images in org-scoped storage
     stored_image_paths: list[str] = []
     for img_str in request.images:
         path = image_storage.save_image_b64(request.org_id, record_id, img_str)
         stored_image_paths.append(path)
+        # Register in database with tenant isolation
+        img_rec = ImageRecord(
+            record_id=record_id,
+            org_id=request.org_id,
+            filename=os.path.basename(path),
+            storage_path=path,
+        )
+        repo.register_image(img_rec)
 
     expected_parts = resolve_expected_parts(request.ordered_sku, request.parts_list)
 
@@ -94,7 +108,6 @@ async def assess_return(
         )
 
     # Persist into database with tenant isolation
-    repo = ReturnRepository(db)
     db_record = ReturnRecord(
         record_id=record_id,
         org_id=request.org_id,
@@ -226,3 +239,32 @@ def submit_override(
     )
 
     return ReturnRecordEvidence.model_validate(evidence_dict)
+
+
+@router.get(
+    "/images/{image_id}",
+    summary="Secure tenant-gated image retrieval (RULES.md §2.1)",
+)
+def get_tenant_image(
+    image_id: int,
+    x_org_id: str = Header(..., alias="X-Org-Id", description="Tenant organization ID"),
+    db: Session = Depends(get_db),
+):
+    """
+    Enforces strict tenant boundary on image downloads.
+    An organisation cannot access another organisation's photos by guessing an image ID.
+    """
+    repo = ReturnRepository(db)
+    img_rec = repo.get_image(image_id, x_org_id)
+    if not img_rec:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Image #{image_id} not found or access denied for tenant '{x_org_id}'",
+        )
+
+    file_path = Path(img_rec.storage_path)
+    if not file_path.exists():
+        # Fallback 1x1 transparent pixel if file was stored ephemeral
+        return Response(content=b"", media_type=img_rec.mime_type)
+
+    return FileResponse(path=str(file_path), media_type=img_rec.mime_type)
