@@ -40,9 +40,11 @@
     <span class="text-indigo-300">RULES.md §2.1 Compliance</span>
   </div>
 
-  <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-    <!-- Left Column: Demo Presets + Returned Product Details Form -->
-    <div class="lg:col-span-5 space-y-6">
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+    <!-- Top 2-Column Section: Presets/Intake (Left) & Active Evidence (Right) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Left Column: Demo Presets + Returned Product Details Form -->
+      <div class="lg:col-span-5 space-y-6">
 
       <!-- Dedicated Quick Demo Presets Card -->
       <section class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
@@ -260,42 +262,46 @@
           </div>
         </div>
       </div>
-
-      <!-- Tenant Isolation Data Explorer -->
-      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-        <div class="flex justify-between items-center mb-3">
-          <div>
-            <h3 class="text-sm font-bold text-gray-800">Database Records for Active Tenant</h3>
-            <p class="text-xs text-gray-500">Notice: Only rows belonging to the active tenant appear here.</p>
-          </div>
-          <button id="btnRefreshList" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold border border-indigo-200 px-2.5 py-1 rounded">
-            ↻ Refresh List
-          </button>
-        </div>
-
-        <div class="overflow-x-auto">
-          <table class="min-w-full text-xs text-left border">
-            <thead class="bg-gray-50 text-gray-600 border-b">
-              <tr>
-                <th class="py-2 px-3">Record ID</th>
-                <th class="py-2 px-3">Unit ID</th>
-                <th class="py-2 px-3">SKU</th>
-                <th class="py-2 px-3">Condition</th>
-                <th class="py-2 px-3">Disposition</th>
-                <th class="py-2 px-3">Status</th>
-                <th class="py-2 px-3 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody id="tenantRecordsTable" class="divide-y divide-gray-100">
-              <tr>
-                <td colspan="7" class="py-4 text-center text-gray-400">No records found for this tenant yet.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </section>
-  </main>
+  </div>
+
+  <!-- Full-Width Bottom Section: Database Records for Active Tenant -->
+  <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+    <div class="flex justify-between items-center mb-4 pb-2 border-b">
+      <div>
+        <div class="flex items-center gap-2">
+          <h3 class="text-base font-bold text-gray-800">Database Records for Active Tenant</h3>
+          <span class="text-xxs px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-semibold border border-indigo-200">Strict Tenant Partitioning</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">Live records scoped strictly to active organization. Tenant B receives 404 and cannot access rows from Tenant A.</p>
+      </div>
+      <button id="btnRefreshList" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition flex items-center gap-1.5 shadow-2xs">
+        <span>↻</span> Refresh Records
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-xs text-left border">
+        <thead class="bg-gray-50 text-gray-600 border-b">
+          <tr>
+            <th class="py-2.5 px-3 font-semibold">Record ID</th>
+            <th class="py-2.5 px-3 font-semibold">Unit ID</th>
+            <th class="py-2.5 px-3 font-semibold">SKU</th>
+            <th class="py-2.5 px-3 font-semibold">Condition</th>
+            <th class="py-2.5 px-3 font-semibold">Disposition</th>
+            <th class="py-2.5 px-3 font-semibold">Status</th>
+            <th class="py-2.5 px-3 font-semibold text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody id="tenantRecordsTable" class="divide-y divide-gray-100">
+          <tr>
+            <td colspan="7" class="py-4 text-center text-gray-400">No records found for this tenant yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
 
   <script>
     let activeRecord = null;
