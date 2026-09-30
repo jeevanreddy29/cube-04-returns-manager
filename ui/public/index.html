@@ -42,12 +42,12 @@
 
   <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
     <!-- Top 2-Column Section: Presets/Intake (Left) & Active Evidence (Right) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
       <!-- Left Column: Demo Presets + Returned Product Details Form -->
-      <div class="lg:col-span-5 space-y-6">
+      <div class="lg:col-span-5 flex flex-col space-y-6">
 
       <!-- Dedicated Quick Demo Presets Card -->
-      <section class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+      <section class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm shrink-0">
         <div class="flex justify-between items-center pb-2.5 border-b mb-2.5">
           <div class="flex items-center gap-2">
             <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -129,13 +129,13 @@
       </section>
 
       <!-- Returned Product Details (Operational Intake Form) -->
-      <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-        <div class="flex justify-between items-center pb-2 border-b mb-4">
+      <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col justify-between">
+        <div class="flex justify-between items-center pb-2 border-b mb-3">
           <h2 class="text-lg font-bold text-gray-800">Returned Product Details</h2>
           <span class="text-xxs px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-semibold border border-indigo-200">Operational Form</span>
         </div>
 
-        <form id="intakeForm" class="space-y-4">
+        <form id="intakeForm" class="space-y-3.5 flex-1 flex flex-col justify-between">
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-semibold text-gray-600 mb-1">Unit ID</label>
@@ -177,11 +177,25 @@
           </div>
 
           <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Return Parcel Optical Stream</label>
+            <div class="border border-dashed border-gray-300 rounded-lg p-2.5 bg-gray-50 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span class="text-xs text-gray-700 font-medium">Overhead & Barcode Cameras Loaded</span>
+              </div>
+              <span class="text-xxs px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-mono font-bold">READY</span>
+            </div>
+          </div>
+
+          <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Operator ID</label>
             <input type="text" id="operator_id" value="op_ben" class="w-full border rounded px-3 py-1.5 text-sm" required>
           </div>
 
-          <button type="submit" id="btnAssess" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-sm transition">
+          <button type="submit" id="btnAssess" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-sm transition mt-2">
             Run Multi-Check Returns Agent
           </button>
         </form>
@@ -189,9 +203,9 @@
     </div>
 
     <!-- Right: Evidence Record Viewer & History -->
-    <section class="lg:col-span-7 space-y-6">
+    <section class="lg:col-span-7 flex flex-col">
       <!-- Active Inspection Result Card -->
-      <div id="resultCard" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+      <div id="resultCard" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col justify-between">
         <div class="flex justify-between items-center mb-4 pb-2 border-b">
           <h2 class="text-lg font-bold text-gray-800">Operational Evidence Record</h2>
           <span id="recordStatusBadge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold badge-pending">Waiting</span>
@@ -258,11 +272,9 @@
           </div>
 
           <div class="border-t pt-3">
-            <details class="text-xs group">
-              <summary class="font-semibold text-gray-600 cursor-pointer flex items-center gap-1.5 hover:text-gray-900 select-none">
-                <span>▶</span> Raw Evidence Contract JSON (SHA-256 Verified)
-              </summary>
-              <pre id="rawJson" class="bg-gray-900 text-green-400 p-3 rounded mt-2 max-h-64 overflow-y-auto overflow-x-auto text-xs font-mono border border-gray-800 shadow-inner"></pre>
+            <details class="text-xs">
+              <summary class="font-semibold text-gray-600 cursor-pointer hover:text-gray-900 select-none">Raw Evidence Contract JSON (SHA-256 Verified)</summary>
+              <pre id="rawJson" class="bg-gray-900 text-green-400 p-3 rounded mt-2 max-h-52 overflow-y-auto overflow-x-auto text-xs font-mono border border-gray-800 shadow-inner"></pre>
             </details>
           </div>
         </div>
