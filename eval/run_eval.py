@@ -5,10 +5,17 @@ with dual human label agreement analysis (RULES.md §5).
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+# Ensure workspace root is in sys.path when invoked directly
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import csv
 import json
 import time
-from pathlib import Path
 import pandas as pd
 from tabulate import tabulate
 
