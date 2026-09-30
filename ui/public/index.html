@@ -129,13 +129,13 @@
       </section>
 
       <!-- Returned Product Details (Operational Intake Form) -->
-      <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col justify-between">
+      <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex-1">
         <div class="flex justify-between items-center pb-2 border-b mb-3">
           <h2 class="text-lg font-bold text-gray-800">Returned Product Details</h2>
           <span class="text-xxs px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-semibold border border-indigo-200">Operational Form</span>
         </div>
 
-        <form id="intakeForm" class="space-y-3.5 flex-1 flex flex-col justify-between">
+        <form id="intakeForm" class="space-y-3.5">
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-semibold text-gray-600 mb-1">Unit ID</label>
@@ -176,21 +176,7 @@
             <p class="text-xs text-gray-400 mt-1">Observed state is an operator input, NOT an Amazon condition grade.</p>
           </div>
 
-          <div>
-            <label class="block text-xs font-semibold text-gray-600 mb-1">Return Parcel Optical Stream</label>
-            <div class="border border-dashed border-gray-300 rounded-lg p-2.5 bg-gray-50 flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span class="text-xs text-gray-700 font-medium">Overhead & Barcode Cameras Loaded</span>
-              </div>
-              <span class="text-xxs px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-mono font-bold">READY</span>
-            </div>
-          </div>
-
-          <div>
+                    <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Operator ID</label>
             <input type="text" id="operator_id" value="op_ben" class="w-full border rounded px-3 py-1.5 text-sm" required>
           </div>
@@ -205,13 +191,13 @@
     <!-- Right: Evidence Record Viewer & History -->
     <section class="lg:col-span-7 flex flex-col">
       <!-- Active Inspection Result Card -->
-      <div id="resultCard" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col justify-between">
+      <div id="resultCard" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
         <div class="flex justify-between items-center mb-4 pb-2 border-b">
           <h2 class="text-lg font-bold text-gray-800">Operational Evidence Record</h2>
           <span id="recordStatusBadge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold badge-pending">Waiting</span>
         </div>
 
-        <div id="welcomePlaceholder" class="text-center py-12 text-gray-400">
+        <div id="welcomePlaceholder" class="flex-1 flex flex-col items-center justify-center text-center py-16 text-gray-400">
           <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
