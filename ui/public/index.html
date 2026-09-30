@@ -225,7 +225,6 @@
             <div>
               <span class="block text-xs text-gray-500 font-medium">Disposition</span>
               <span id="dispDisposition" class="font-bold text-green-700">-</span>
-              <span id="dispDispositionReason" class="block text-xxs text-gray-600 mt-1 leading-tight font-medium">Reason: Identity verified + parts complete</span>
             </div>
             <div>
               <span class="block text-xs text-gray-500 font-medium">Overall Verdict</span>
@@ -552,8 +551,6 @@
       }
 
       bReason.innerHTML = "<strong>Reason:</strong> " + reasonText;
-      const dispReasonEl = document.getElementById('dispDispositionReason');
-      if (dispReasonEl) dispReasonEl.innerHTML = "<strong>Reason:</strong> " + reasonText;
 
       const badge = document.getElementById('recordStatusBadge');
       badge.innerText = record.status.toUpperCase();
