@@ -53,7 +53,81 @@
 └────────────────────────────────────────────────────────┘
 ```
 
-## Key Architectural Principles
+## Components
+
+1. **Intake & Assessment Router (`src/ingestion/router.py`)**:
+   - Exposes RESTful endpoints (`POST /assess`, `GET /{record_id}`, `POST /{record_id}/override`, `GET /images/{image_id}`).
+   - Gated by mandatory `X-Org-Id` tenant isolation header.
+
+2. **Multimodal Agent (`src/agent/analyzer.py` & `prompt_builder.py`)**:
+   - Manages Gemini API integration with dynamic model selection (`GEMINI_MODEL`).
+   - Batches identity, completeness, and condition evaluation into a single visual prompt.
+   - Includes deterministic mock engine for zero-cost offline evaluations.
+
+3. **Authoritative Catalogue & Condition Scale (`src/catalogue/`)**:
+   - Loads versioned Amazon Used Condition Guidelines from `config/condition_scale.json`.
+   - Resolves bill-of-materials (BOM) parts lists for known SKUs.
+
+4. **Deterministic Disposition Engine (`src/decisions/disposition_rules.py`)**:
+   - Pure Python business logic mapping condition grades and completeness status to operational routings (`restock`, `refurbish`, `liquidate`, `dispose`, `pending_review`).
+   - Completely decoupled from LLMs to ensure reproducible, explainable decisions.
+
+5. **Structured Evidence Contract Assembler (`src/evidence/contract.py` & `hasher.py`)**:
+   - Formats outputs to the official CUBE schema.
+   - Generates SHA-256 fingerprint (`content_hash`) of the entire evaluation record.
+
+6. **Tenant-Partitioned Database & Storage (`src/database/` & `src/images/storage.py`)**:
+   - SQLAlchemy ORM with SQLite WAL mode.
+   - Compound indexes on `(org_id, record_id)` and `(org_id, unit_id)`.
+   - Append-only `overrides` table preserving full audit history.
+   - Org-scoped image filesystem directories preventing path traversal attacks.
+
+---
+
+## Data Flow
+
+```text
+1. Warehouse Intake Request (POST /assess)
+   ├── Tenant Header: X-Org-Id: org_demo_alpha
+   └── Payload: unit_id, order_id, ordered_sku, parts_list, observed_state, images[]
+         │
+2. Tenant Storage & Validation
+   ├── Store image bytes under storage/images/{org_id}/
+   └── Look up expected parts BOM from catalogue
+         │
+3. Single Batched AI Vision Call
+   ├── Sends images + item metadata + Amazon condition scale in one prompt
+   └── Receives JSON: {identity: PASS/FAIL/UNCERTAIN, completeness: ..., condition: ...}
+         │
+4. Deterministic Disposition Resolution
+   ├── Pure Python decision tree evaluates checks & Amazon condition scale
+   └── Resolves disposition: restock / refurbish / liquidate / dispose / pending_review
+         │
+5. Evidence Contract Assembly & Fingerprinting
+   ├── Wraps checks, outcomes, latencies, model version, and timestamps
+   └── Computes SHA-256 canonical hash
+         │
+6. Multi-Tenant DB Persistence
+   ├── Inserts ReturnRecord with org_id isolation
+   └── Returns ReturnRecordEvidence JSON response
+         │
+7. Optional Human Operator Override (POST /{record_id}/override)
+   ├── Validates tenant ownership
+   └── Appends override to audit ledger and updates evidence blob
+```
+
+---
+
+## Model / Agent Usage
+
+- **Model Selection**: Configured dynamically via `GEMINI_MODEL` (defaults to `gemini-1.5-flash`, with support for `gemini-1.5-pro` and `gemini-2.0-flash`).
+- **Batched Reasoning**: All three physical assessments (Identity, Completeness, Amazon Condition Grade) are combined into a single multimodal prompt to minimize latency and API cost.
+- **Strict Identity Prompting**: The agent looks for verifiable identifiers (barcodes, serial labels, ASIN tags). If photos show only visual likeness without a verifiable identifier, the prompt strictly commands the agent to output `UNCERTAIN` rather than a blind `PASS`.
+- **Offline / Fallback Simulation**: In CI/CD or zero-credential environments, a deterministic fallback simulator generates realistic outcomes without failing the test suite.
+
+---
+
+## Important Engineering Decisions
 
 1. **Batched Multimodal AI Analysis (Engineering Rule 2)**:
    Avoids serial expensive model calls. A single multimodal request evaluates identity, expected components, and physical condition concurrently.
@@ -68,4 +142,4 @@
    `UNCERTAIN` is treated as a valid first-class outcome, never converted to a false PASS or FAIL. Any model exception or timeout preserves all input data into `pending_review`.
 
 5. **Append-Only Operator Overrides (Evidence Rule 3)**:
-   When human inspectors disagree with agent decisions, an override record is appended with original verdict, revised verdict, operator ID, timestamp, and justification.
+   When human inspectors disagree with agent decisions, an override record is appended with original verdict, revised verdict, operator ID, timestamp, and justification. The original AI verdict is never erased.

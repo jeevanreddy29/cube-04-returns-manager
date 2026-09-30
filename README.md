@@ -7,50 +7,80 @@
 
 ---
 
-## Overview
+## Problem Understanding
 
-The **Returns Manager** is an autonomous and auditable inspection system designed for e-commerce merchants and prep centers. When a customer return package arrives, this agent performs:
+In high-volume e-commerce and 3PL returns operations, handling returns presents significant challenges:
+- **Return Fraud & Switch Fraud**: Customers returning counterfeit, replica, or mismatched items in original boxes.
+- **Subjective Inspection**: Human operators apply inconsistent condition criteria, resulting in misrouted inventory and customer friction.
+- **Lack of Auditability**: Decisions lack structured, verifiable evidence trails that downstream systems (like Recovery or Claims Management) can trust.
+- **Tenant Privacy**: 3PL prep centers serve multiple competing merchant organizations whose return records and photographic evidence must never cross boundaries.
 
-1. **Identity Verification**: Verifies returned product matches the ordered ASIN/SKU.
-2. **Completeness Verification**: Compares visible package contents against the bill of materials / expected parts list.
-3. **Condition Assessment**: Evaluates physical wear using the authoritative, published **Amazon Condition Guidelines** (`New`, `Like New`, `Very Good`, `Good`, `Acceptable`).
-4. **Deterministic Disposition**: Computes routing recommendations (`restock`, `refurbish`, `liquidate`, `dispose`, or `pending_review`).
-5. **Auditable Evidence Contract**: Produces a standardized, SHA-256 fingerprinted JSON record consumable downstream by Recovery Manager.
-
----
-
-## Key Engineering Compliance
-
-- **Batched Multimodal AI Execution (Engineering Rule 2)**: All visual reasoning (identity, completeness, condition) is performed in a **single batched Gemini multimodal call**, preventing expensive serial invocations.
-- **Configurable Model**: Configurable dynamically via `GEMINI_MODEL` (e.g. `gemini-1.5-flash`, `gemini-1.5-pro`, `gemini-2.0-flash`).
-- **Decoupled Observed State vs. Official Scale**: Raw operator observations (`observed_state`) are kept distinct from official Amazon grades (`amazon_condition`).
-- **First-Class Uncertainty (Engineering Rule 4)**: `UNCERTAIN` is an explicit, supported verdict. The agent never forces ambiguous visual evidence into false binary outcomes.
-- **Fail Open (Engineering Rule 3)**: Any model timeout or dependency error preserves all data and routes the case to `pending_review`.
-- **Append-Only Operator Overrides (Evidence Rule 3)**: Disagreements by human inspectors are stored in an append-only ledger preserving original vs. revised decisions with reasons.
-- **Strict Tenancy Isolation (Engineering Rule 1)**: Built-in multi-tenant isolation enforcing `org_id` boundaries on all database queries and image access.
+The **04 · Returns Manager** addresses this by acting as an autonomous, auditable, and multi-tenant return inspection agent that standardizes condition grading, prevents fraudulent acceptances, and produces canonical evidence records for downstream systems.
 
 ---
 
-## Quickstart
+## Solution Overview
 
-### 1. Install Dependencies
+When a customer return package arrives at the inspection station:
+1. **Identity Verification**: Verifies returned product against the expected SKU/ASIN. Enforces strict verification: if photos lack machine-readable identifiers (barcodes, serial tags, ASIN stickers), the agent refuses to blindly PASS on visual likeness alone and safely marks `UNCERTAIN`.
+2. **Completeness Verification**: Compares visible parcel contents against expected bill-of-materials components.
+3. **Condition Assessment**: Evaluates physical wear against authoritative, published **Amazon Condition Guidelines** (`New`, `Like New`, `Very Good`, `Good`, `Acceptable`) loaded from versioned configuration.
+4. **Deterministic Disposition Rules**: Computes routing recommendations (`restock`, `refurbish`, `liquidate`, `dispose`, or `pending_review`) using pure Python business logic without unvetted secondary LLM calls.
+5. **Auditable Evidence Contract**: Produces a standardized, SHA-256 fingerprinted JSON record consumable downstream by Round 3 agents (e.g. Recovery Manager).
+
+---
+
+## Setup Instructions
+
+### 1. Prerequisites
+- Python 3.10+ (Tested on Python 3.12)
+- Git
+
+### 2. Clone and Install Dependencies
 ```bash
+git clone https://github.com/jeevanreddy29/cube-04-returns-manager.git
+cd cube-04-returns-manager
 pip install -r requirements.txt
 ```
 
-### 2. Configure Environment
-Copy the `.env.example` file:
+### 3. Configure Environment Variables
+Copy `.env.example` to `.env`:
 ```bash
 cp .env.example .env
 ```
-Add your `GEMINI_API_KEY` (if testing with live Google Gemini models). When left blank, the application automatically runs in deterministic mock evaluation mode.
+Key configuration settings:
+- `GEMINI_API_KEY`: Google Gemini API key (optional: if omitted, system runs in deterministic simulated evaluation mode).
+- `GEMINI_MODEL`: Model identifier (default: `gemini-1.5-flash`; configurable to `gemini-1.5-pro` or `gemini-2.0-flash`).
+- `DATABASE_URL`: SQLAlchemy connection string (default: SQLite `sqlite:///./returns_manager.db`).
 
-### 3. Run the Application
+---
+
+## Usage Instructions
+
+### Running the Application Locally
 ```bash
 python -m uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 - **Web UI & Operator Dashboard**: Visit [http://localhost:8000](http://localhost:8000)
 - **Interactive OpenAPI Documentation**: Visit [http://localhost:8000/docs](http://localhost:8000/docs)
+
+### Cloud Deployment
+The application is live and publicly accessible on Vercel:
+**[https://cube-04-returns-manager.vercel.app/](https://cube-04-returns-manager.vercel.app/)**
+
+---
+
+## Assumptions & Limitations
+
+### Assumptions
+1. **Upstream Catalog Data**: Expected SKU, ASIN, and parts BOM are assumed to be provided by the warehouse management system (WMS) or resolved from catalog configuration.
+2. **First-Class Uncertainty**: When evidence is obscured, blurry, or missing serial identifiers, the agent deliberately treats `UNCERTAIN` as a valid outcome that routes to `pending_review` rather than guessing.
+3. **Append-Only Override Policy**: Human operators have the authority to override AI verdicts, but the original verdict and justification must remain permanently recorded for auditability.
+
+### Limitations
+1. **Serverless Ephemeral Storage**: On serverless environments (Vercel), SQLite and file storage run in `/tmp`, which is ephemeral across cold boots. For production scale, an external PostgreSQL and S3-compatible object store should be configured.
+2. **Visual Barcode Resolution**: Ultra-low-resolution photos (< 300 DPI) or severe lighting glare may prevent automated barcode reading, intentionally triggering an `UNCERTAIN` verdict.
+3. **No Standalone Fraud Claiming**: Returns Manager flags evidence of mismatch/damage, but final financial claims/reimbursements are explicitly delegated downstream to the Recovery Manager.
 
 ---
 
