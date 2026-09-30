@@ -53,75 +53,75 @@
             </svg>
             <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Evaluation Demo Presets</h3>
           </div>
-          <span class="text-xxs px-2 py-0.5 bg-slate-100 text-slate-600 rounded font-mono font-medium">1-Click Autofill</span>
+          <span class="text-xxs px-2.5 py-0.5 bg-slate-100 text-slate-700 rounded font-mono font-bold border border-slate-200">Quick Autofill</span>
         </div>
-        <p class="text-xs text-gray-500 mb-3">Simulate representative warehouse return conditions to test agent multi-path reasoning.</p>
+        <p class="text-xs text-gray-500 mb-3">Simulate representative return scenarios to evaluate the agent's decision paths.</p>
 
         <div class="grid grid-cols-2 gap-2 text-xs">
           <!-- Preset 1: Like New -->
-          <button type="button" onclick="loadPreset('like_new')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
+          <button type="button" onclick="loadPreset('like_new')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-emerald-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
             <div class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-emerald-600 group-hover:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" style="color: #059669;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
               </svg>
-              <span class="font-medium text-slate-700">Like New</span>
+              <span class="font-semibold text-slate-800">Like New</span>
             </div>
-            <span class="text-xxs px-1.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded font-bold font-mono">RESTOCK</span>
+            <span class="text-xxs px-2 py-0.5 rounded font-bold font-mono" style="background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;">RESTOCK</span>
           </button>
 
           <!-- Preset 2: Signs of Use -->
-          <button type="button" onclick="loadPreset('used')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
+          <button type="button" onclick="loadPreset('used')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-blue-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
             <div class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-blue-600 group-hover:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" style="color: #2563eb;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
               </svg>
-              <span class="font-medium text-slate-700">Signs of Use</span>
+              <span class="font-semibold text-slate-800">Signs of Use</span>
             </div>
-            <span class="text-xxs px-1.5 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded font-bold font-mono">RESTOCK</span>
+            <span class="text-xxs px-2 py-0.5 rounded font-bold font-mono" style="background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe;">RESTOCK</span>
           </button>
 
           <!-- Preset 3: Missing Parts -->
-          <button type="button" onclick="loadPreset('missing_part')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
+          <button type="button" onclick="loadPreset('missing_part')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-amber-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
             <div class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-amber-600 group-hover:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" style="color: #d97706;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
-              <span class="font-medium text-slate-700">Missing Parts</span>
+              <span class="font-semibold text-slate-800">Missing Parts</span>
             </div>
-            <span class="text-xxs px-1.5 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded font-bold font-mono">REFURBISH</span>
+            <span class="text-xxs px-2 py-0.5 rounded font-bold font-mono" style="background-color: #fffbeb; color: #b45309; border: 1px solid #fde68a;">REFURBISH</span>
           </button>
 
           <!-- Preset 4: Empty Box -->
-          <button type="button" onclick="loadPreset('empty_box')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
+          <button type="button" onclick="loadPreset('empty_box')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-rose-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
             <div class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-rose-600 group-hover:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" style="color: #dc2626;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4m16 0a2 2 0 01-2 2H6a2 2 0 01-2-2m16 0a2 2 0 00-2-2H6a2 2 0 00-2 2m16 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
               </svg>
-              <span class="font-medium text-slate-700">Empty Box</span>
+              <span class="font-semibold text-slate-800">Empty Box</span>
             </div>
-            <span class="text-xxs px-1.5 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded font-bold font-mono">DISPOSE</span>
+            <span class="text-xxs px-2 py-0.5 rounded font-bold font-mono" style="background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca;">DISPOSE</span>
           </button>
 
           <!-- Preset 5: Damaged Item -->
-          <button type="button" onclick="loadPreset('damaged')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
+          <button type="button" onclick="loadPreset('damaged')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-orange-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
             <div class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-orange-600 group-hover:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" style="color: #ea580c;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
-              <span class="font-medium text-slate-700">Damaged Item</span>
+              <span class="font-semibold text-slate-800">Damaged Item</span>
             </div>
-            <span class="text-xxs px-1.5 py-0.5 bg-orange-50 text-orange-700 border border-orange-200 rounded font-bold font-mono">DISPOSE</span>
+            <span class="text-xxs px-2 py-0.5 rounded font-bold font-mono" style="background-color: #fff7ed; color: #c2410c; border: 1px solid #fed7aa;">DISPOSE</span>
           </button>
 
           <!-- Preset 6: Insufficient Evidence -->
-          <button type="button" onclick="loadPreset('uncertain')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
+          <button type="button" onclick="loadPreset('uncertain')" class="p-2.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-purple-400 rounded-lg text-left transition shadow-xs flex items-center justify-between group">
             <div class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-purple-600 group-hover:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" style="color: #9333ea;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span class="font-medium text-slate-700">Insufficient Evidence</span>
+              <span class="font-semibold text-slate-800">Insufficient Evidence</span>
             </div>
-            <span class="text-xxs px-1.5 py-0.5 bg-purple-50 text-purple-700 border border-purple-200 rounded font-bold font-mono">REVIEW</span>
+            <span class="text-xxs px-2 py-0.5 rounded font-bold font-mono" style="background-color: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff;">REVIEW</span>
           </button>
         </div>
       </section>
@@ -208,7 +208,7 @@
             <div>
               <span class="text-xxs uppercase font-bold text-gray-500 tracking-wider">Autonomous Agent Disposition</span>
               <div id="bannerDisposition" class="text-2xl font-black uppercase text-emerald-800 tracking-tight">RESTOCK</div>
-              <div id="bannerReason" class="text-xs text-emerald-700 font-medium mt-0.5">Item complete and meets condition guidelines</div>
+              <div id="bannerReason" class="text-xs font-semibold mt-1 text-emerald-800">Reason: Identity verified + all parts present + condition meets restock criteria.</div>
             </div>
             <div id="bannerBadge" class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider badge-pass shadow-sm">PASS</div>
           </div>
@@ -225,6 +225,7 @@
             <div>
               <span class="block text-xs text-gray-500 font-medium">Disposition</span>
               <span id="dispDisposition" class="font-bold text-green-700">-</span>
+              <span id="dispDispositionReason" class="block text-xxs text-gray-600 mt-1 leading-tight font-medium">Reason: Identity verified + parts complete</span>
             </div>
             <div>
               <span class="block text-xs text-gray-500 font-medium">Overall Verdict</span>
@@ -516,27 +517,43 @@
       bBadge.innerText = overall;
       bBadge.className = "px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-sm " + getVerdictClass(overall);
 
+      let reasonText = "";
       if (disp === 'RESTOCK') {
+        reasonText = "Identity verified + all parts present + condition (" + condition + ") meets restock criteria.";
         banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-emerald-50 border-emerald-300";
         bDisp.className = "text-2xl font-black uppercase text-emerald-800 tracking-tight";
-        bReason.innerText = "Item is authentic, complete, and meets Amazon resale condition guidelines.";
+        bReason.className = "text-xs font-semibold mt-1 text-emerald-800";
       } else if (disp === 'REFURBISH') {
+        const missingCount = (record.outcome?.parts_missing || []).length;
+        const missingStr = missingCount > 0 ? " (" + (record.outcome.parts_missing).join(", ") + ")" : "";
+        reasonText = "Identity verified, but parts missing" + missingStr + " → Refurbishment required before restock.";
         banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-amber-50 border-amber-300";
         bDisp.className = "text-2xl font-black uppercase text-amber-800 tracking-tight";
-        bReason.innerText = "Item is authentic but missing parts or requires technical reconditioning.";
+        bReason.className = "text-xs font-semibold mt-1 text-amber-800";
       } else if (disp === 'DISPOSE') {
+        if (record.outcome?.observed_state === 'empty_box') {
+          reasonText = "Zero primary unit contents found (Empty packaging) → Dispose & initiate carrier claim.";
+        } else {
+          reasonText = "Severe physical impact fracture / hygiene violation → Dispose.";
+        }
         banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-rose-50 border-rose-300";
         bDisp.className = "text-2xl font-black uppercase text-rose-800 tracking-tight";
-        bReason.innerText = "Empty package, severe physical fracture, or hygiene/safety violation.";
+        bReason.className = "text-xs font-semibold mt-1 text-rose-800";
       } else if (disp === 'LIQUIDATE') {
+        reasonText = "Heavy aesthetic wear (Acceptable condition) → Salvage recovery via liquidation.";
         banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-blue-50 border-blue-300";
         bDisp.className = "text-2xl font-black uppercase text-blue-800 tracking-tight";
-        bReason.innerText = "Heavy cosmetic wear (Acceptable condition); route to secondary liquidation.";
+        bReason.className = "text-xs font-semibold mt-1 text-blue-800";
       } else {
+        reasonText = "Insufficient evidence or unreadable barcode → Gated for human operator review.";
         banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-purple-50 border-purple-300";
         bDisp.className = "text-2xl font-black uppercase text-purple-800 tracking-tight";
-        bReason.innerText = "Ambiguous proof or barcode unreadable; routed for human physical review.";
+        bReason.className = "text-xs font-semibold mt-1 text-purple-800";
       }
+
+      bReason.innerHTML = "<strong>Reason:</strong> " + reasonText;
+      const dispReasonEl = document.getElementById('dispDispositionReason');
+      if (dispReasonEl) dispReasonEl.innerHTML = "<strong>Reason:</strong> " + reasonText;
 
       const badge = document.getElementById('recordStatusBadge');
       badge.innerText = record.status.toUpperCase();
