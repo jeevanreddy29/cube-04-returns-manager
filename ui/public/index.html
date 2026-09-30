@@ -43,7 +43,45 @@
   <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
     <!-- Left: Returned Product Details Form -->
     <section class="lg:col-span-5 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-      <h2 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b">Returned Product Details</h2>
+      <div class="flex justify-between items-center pb-2 border-b mb-3">
+        <h2 class="text-lg font-bold text-gray-800">Returned Product Details</h2>
+        <span class="text-xxs px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-semibold border border-indigo-200">Interactive Intake</span>
+      </div>
+
+      <!-- Quick Demo Presets Bar -->
+      <div class="mb-4 bg-slate-50 p-3 rounded-lg border border-slate-200">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">⚡ Quick Demo Presets</span>
+          <span class="text-xxs text-slate-400">Click to autofill scenario</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5 text-xs">
+          <button type="button" onclick="loadPreset('like_new')" class="preset-btn p-2 border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 rounded text-left transition flex items-center justify-between font-medium">
+            <span>✨ Like New</span>
+            <span class="text-xxs px-1.5 py-0.5 bg-emerald-200 rounded font-bold">RESTOCK</span>
+          </button>
+          <button type="button" onclick="loadPreset('used')" class="preset-btn p-2 border border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-900 rounded text-left transition flex items-center justify-between font-medium">
+            <span>🏷️ Signs of Use</span>
+            <span class="text-xxs px-1.5 py-0.5 bg-blue-200 rounded font-bold">RESTOCK</span>
+          </button>
+          <button type="button" onclick="loadPreset('missing_part')" class="preset-btn p-2 border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded text-left transition flex items-center justify-between font-medium">
+            <span>⚙️ Missing Parts</span>
+            <span class="text-xxs px-1.5 py-0.5 bg-amber-200 rounded font-bold">REFURBISH</span>
+          </button>
+          <button type="button" onclick="loadPreset('empty_box')" class="preset-btn p-2 border border-rose-300 bg-rose-50 hover:bg-rose-100 text-rose-900 rounded text-left transition flex items-center justify-between font-medium">
+            <span>📦 Empty Box</span>
+            <span class="text-xxs px-1.5 py-0.5 bg-rose-200 rounded font-bold">DISPOSE</span>
+          </button>
+          <button type="button" onclick="loadPreset('damaged')" class="preset-btn p-2 border border-orange-300 bg-orange-50 hover:bg-orange-100 text-orange-900 rounded text-left transition flex items-center justify-between font-medium">
+            <span>⚠️ Damaged Item</span>
+            <span class="text-xxs px-1.5 py-0.5 bg-orange-200 rounded font-bold">DISPOSE</span>
+          </button>
+          <button type="button" onclick="loadPreset('uncertain')" class="preset-btn p-2 border border-purple-300 bg-purple-50 hover:bg-purple-100 text-purple-900 rounded text-left transition flex items-center justify-between font-medium">
+            <span>❓ Ambiguous Proof</span>
+            <span class="text-xxs px-1.5 py-0.5 bg-purple-200 rounded font-bold">REVIEW</span>
+          </button>
+        </div>
+      </div>
+
       <form id="intakeForm" class="space-y-4">
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -112,8 +150,18 @@
           Submit a parcel or select a tenant record below.
         </div>
 
-        <div id="evidenceDisplay" class="hidden space-y-5">
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 p-4 rounded-lg border text-sm">
+        <div id="evidenceDisplay" class="hidden space-y-4">
+          <!-- Final Decision Hero Banner -->
+          <div id="finalDecisionBanner" class="p-4 rounded-xl border flex items-center justify-between shadow-sm bg-emerald-50 border-emerald-300">
+            <div>
+              <span class="text-xxs uppercase font-bold text-gray-500 tracking-wider">Autonomous Agent Disposition</span>
+              <div id="bannerDisposition" class="text-2xl font-black uppercase text-emerald-800 tracking-tight">RESTOCK</div>
+              <div id="bannerReason" class="text-xs text-emerald-700 font-medium mt-0.5">Item complete and meets condition guidelines</div>
+            </div>
+            <div id="bannerBadge" class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider badge-pass shadow-sm">PASS</div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 p-3 rounded-lg border text-sm">
             <div>
               <span class="block text-xs text-gray-500 font-medium">Record ID</span>
               <span id="dispRecordId" class="font-bold text-gray-800 font-mono">-</span>
@@ -314,6 +362,79 @@
       }
     }
 
+    // Quick Demo Presets
+    const PRESETS = {
+      like_new: {
+        unit_id: 'UNIT-0016',
+        order_id: 'ORD-50016',
+        ordered_sku: 'SKU-TOWEL-BLU',
+        ordered_asin: 'B0DUMMY600',
+        parts_list: 'towel',
+        observed_state: 'opened_unused',
+        operator_id: 'op_ben'
+      },
+      used: {
+        unit_id: 'UNIT-0022',
+        order_id: 'ORD-50022',
+        ordered_sku: 'SKU-LAMP-LED',
+        ordered_asin: 'B0DUMMY801',
+        parts_list: 'lamp, usb cable, manual',
+        observed_state: 'signs_of_use',
+        operator_id: 'op_ben'
+      },
+      missing_part: {
+        unit_id: 'UNIT-0035',
+        order_id: 'ORD-50035',
+        ordered_sku: 'SKU-BOTTLE-750',
+        ordered_asin: 'B0DUMMY300',
+        parts_list: 'bottle, lid',
+        observed_state: 'signs_of_use',
+        operator_id: 'op_chen'
+      },
+      empty_box: {
+        unit_id: 'UNIT-0041',
+        order_id: 'ORD-50041',
+        ordered_sku: 'SKU-PUZZLE-500',
+        ordered_asin: 'B0DUMMY729',
+        parts_list: 'puzzle pieces, poster',
+        observed_state: 'empty_box',
+        operator_id: 'op_alex'
+      },
+      damaged: {
+        unit_id: 'UNIT-0048',
+        order_id: 'ORD-50048',
+        ordered_sku: 'SKU-MUG-11',
+        ordered_asin: 'B0DUMMY910',
+        parts_list: 'mug x2',
+        observed_state: 'damaged',
+        operator_id: 'op_alex'
+      },
+      uncertain: {
+        unit_id: 'UNIT-0050',
+        order_id: 'ORD-50050',
+        ordered_sku: 'SKU-SERUM-30',
+        ordered_asin: 'B0DUMMY105',
+        parts_list: 'bottle, dropper, leaflet',
+        observed_state: 'uncertain',
+        operator_id: 'op_chen'
+      }
+    };
+
+    window.loadPreset = function(key) {
+      const p = PRESETS[key];
+      if (!p) return;
+      document.getElementById('unit_id').value = p.unit_id;
+      document.getElementById('order_id').value = p.order_id;
+      document.getElementById('ordered_sku').value = p.ordered_sku;
+      document.getElementById('ordered_asin').value = p.ordered_asin;
+      document.getElementById('parts_list').value = p.parts_list;
+      document.getElementById('observed_state').value = p.observed_state;
+      document.getElementById('operator_id').value = p.operator_id;
+
+      // Auto-trigger submit for instant 1-click demo
+      document.getElementById('intakeForm').dispatchEvent(new Event('submit'));
+    };
+
     window.viewSpecificRecord = function(record) {
       activeRecord = record;
       renderEvidence(record);
@@ -324,29 +445,69 @@
       document.getElementById('welcomePlaceholder').classList.add('hidden');
       document.getElementById('evidenceDisplay').classList.remove('hidden');
 
+      const disp = (record.outcome?.disposition || "").toUpperCase();
+      const overall = record.outcome?.overall_verdict || "UNCERTAIN";
+      const condition = record.outcome?.condition || "UNCERTAIN";
+
       document.getElementById('dispRecordId').innerText = record.record_id;
-      document.getElementById('dispCondition').innerText = record.outcome?.condition || "UNCERTAIN";
-      document.getElementById('dispDisposition').innerText = (record.outcome?.disposition || "").toUpperCase();
-      document.getElementById('dispOverall').innerText = record.outcome?.overall_verdict || "UNCERTAIN";
+      document.getElementById('dispCondition').innerText = condition;
+      document.getElementById('dispDisposition').innerText = disp;
+      document.getElementById('dispOverall').innerText = overall;
+
+      // Update Top Decision Hero Banner
+      const banner = document.getElementById('finalDecisionBanner');
+      const bDisp = document.getElementById('bannerDisposition');
+      const bBadge = document.getElementById('bannerBadge');
+      const bReason = document.getElementById('bannerReason');
+
+      bDisp.innerText = disp || "PENDING REVIEW";
+      bBadge.innerText = overall;
+      bBadge.className = "px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-sm " + getVerdictClass(overall);
+
+      if (disp === 'RESTOCK') {
+        banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-emerald-50 border-emerald-300";
+        bDisp.className = "text-2xl font-black uppercase text-emerald-800 tracking-tight";
+        bReason.innerText = "Item is authentic, complete, and meets Amazon resale condition guidelines.";
+      } else if (disp === 'REFURBISH') {
+        banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-amber-50 border-amber-300";
+        bDisp.className = "text-2xl font-black uppercase text-amber-800 tracking-tight";
+        bReason.innerText = "Item is authentic but missing parts or requires technical reconditioning.";
+      } else if (disp === 'DISPOSE') {
+        banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-rose-50 border-rose-300";
+        bDisp.className = "text-2xl font-black uppercase text-rose-800 tracking-tight";
+        bReason.innerText = "Empty package, severe physical fracture, or hygiene/safety violation.";
+      } else if (disp === 'LIQUIDATE') {
+        banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-blue-50 border-blue-300";
+        bDisp.className = "text-2xl font-black uppercase text-blue-800 tracking-tight";
+        bReason.innerText = "Heavy cosmetic wear (Acceptable condition); route to secondary liquidation.";
+      } else {
+        banner.className = "p-4 rounded-xl border flex items-center justify-between shadow-sm bg-purple-50 border-purple-300";
+        bDisp.className = "text-2xl font-black uppercase text-purple-800 tracking-tight";
+        bReason.innerText = "Ambiguous proof or barcode unreadable; routed for human physical review.";
+      }
 
       const badge = document.getElementById('recordStatusBadge');
       badge.innerText = record.status.toUpperCase();
       badge.className = "px-2.5 py-0.5 rounded-full text-xs font-semibold " +
         (record.status === 'complete' ? 'badge-pass' : 'badge-uncertain');
 
+      // Render Check Reasoning Cards
       const checksList = document.getElementById('checksList');
       checksList.innerHTML = '';
       (record.checks || []).forEach(c => {
         const item = document.createElement('div');
-        item.className = "p-2.5 bg-gray-50 rounded border flex justify-between items-center text-xs";
+        item.className = "p-3 bg-white rounded-lg border border-gray-200 shadow-xs flex justify-between items-start text-xs hover:border-gray-300 transition";
         item.innerHTML = `
-          <div>
-            <span class="font-bold uppercase text-gray-700">${c.check_key}</span>
-            <p class="text-gray-500 mt-0.5">${c.detail}</p>
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="font-black uppercase tracking-wider text-gray-800 text-xs">${c.check_key} CHECK</span>
+              <span class="text-xxs px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded font-mono">${(c.confidence * 100).toFixed(0)}% conf</span>
+            </div>
+            <p class="text-gray-700 font-medium text-xs leading-relaxed">${c.detail}</p>
           </div>
-          <div class="text-right">
-            <span class="px-2 py-0.5 rounded font-bold ${getVerdictClass(c.verdict)}">${c.verdict}</span>
-            <span class="block text-gray-400 text-xxs mt-1">${c.latency_ms}ms · ${c.model_version}</span>
+          <div class="text-right shrink-0 ml-4">
+            <span class="px-2.5 py-1 rounded font-black text-xs ${getVerdictClass(c.verdict)}">${c.verdict}</span>
+            <span class="block text-gray-400 text-xxs mt-1 font-mono">${c.latency_ms}ms · ${c.model_version}</span>
           </div>
         `;
         checksList.appendChild(item);
