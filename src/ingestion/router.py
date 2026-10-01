@@ -39,7 +39,7 @@ image_storage = TenantImageStorage()
     "/assess",
     response_model=ReturnRecordEvidence,
     status_code=status.HTTP_201_CREATED,
-    summary="Submit and evaluate a customer return parcel",
+    summary="Submit and evaluate a customer return product",
 )
 async def assess_return(
     request: AssessRequest,

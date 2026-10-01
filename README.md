@@ -23,7 +23,7 @@ The **04 · Returns Manager** addresses this by acting as an autonomous, auditab
 
 When a customer return package arrives at the inspection station:
 1. **Identity Verification**: Verifies returned product against the expected SKU/ASIN. Enforces strict verification: if photos lack machine-readable identifiers (barcodes, serial tags, ASIN stickers), the agent refuses to blindly PASS on visual likeness alone and safely marks `UNCERTAIN`.
-2. **Completeness Verification**: Compares visible parcel contents against expected bill-of-materials components.
+2. **Completeness Verification**: Compares visible product contents against expected bill-of-materials components.
 3. **Condition Assessment**: Evaluates physical wear against authoritative, published **Amazon Condition Guidelines** (`New`, `Like New`, `Very Good`, `Good`, `Acceptable`) loaded from versioned configuration.
 4. **Deterministic Disposition Rules**: Computes routing recommendations (`restock`, `refurbish`, `liquidate`, `dispose`, or `pending_review`) using pure Python business logic without unvetted secondary LLM calls.
 5. **Auditable Evidence Contract**: Produces a standardized, SHA-256 fingerprinted JSON record consumable downstream by Round 3 agents (e.g. Recovery Manager).

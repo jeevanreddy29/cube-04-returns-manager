@@ -24,7 +24,7 @@ def build_assessment_prompt(
 
     return f"""You are the official Returns Manager Agent operating at an e-commerce fulfillment and returns inspection center.
 
-You are inspecting a customer return parcel for:
+You are inspecting a customer return product for:
 - Ordered SKU: {ordered_sku}
 - Ordered ASIN: {ordered_asin}
 - Order ID: {order_id}
